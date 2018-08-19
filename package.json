@@ -1,6 +1,6 @@
 {
-  "name": "reveal-template",
-  "title": "Reveal Template",
+  "name": "intro-tree-sitter",
+  "title": "はやわかりtree-sitter",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",

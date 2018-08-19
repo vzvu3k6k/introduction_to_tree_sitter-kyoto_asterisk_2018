@@ -1,2 +1,176 @@
+section.front
+  header
+    h1
+      | はやわかり
+      br
+      | tree-sitter
+    small
+      | Kyoto.* #4 (2018-08-18)
 section
-  h1 Reveal Template
+  h2 tree-sitterとは
+  p
+    a(href="https://github.com/tree-sitter/tree-sitter")
+      | https://github.com/tree-sitter/tree-sitter
+  ul
+    li パーサージェネレーターの一種
+    li なるほど？
+    li ところでパーサージェネレーターとは…
+section
+  h2 そのまえにパーサーとは
+  p 決まった文法に従って文字列を解釈するやつ
+  p たとえば
+    ul
+      li なんかのソースコード
+      li なんかの設定ファイル
+      li コマンドライン引数
+    br
+    | とかのパーサーを毎日使ってるはず
+section
+  ul
+    li パーサーを手書きするのは大変
+      ul
+        li あっという間にメンテ不能になる
+        li 効率のよい実装にするのも大変
+    li 文法を渡してあげるとパーサーを生成してくれるもの＝パーサージェネレーター
+      li
+        | bison, ANTLR, 
+        b tree-sitter
+        | など
+section
+  h2 tree-sitterとは
+  ul
+    li パーサージェネレーターの一種
+    li
+      q An incremental parsing system
+      ul
+        li パース→ソースコード編集→再パース
+        li 高速に再パースできる
+section
+  h3 特徴
+  ul
+    li 文法はJSで定義する
+      ul
+        li 独自DSLではない
+        li JSならだいたいみんな読める
+    li 出力されるパーサーのコードはC言語
+      ul
+        li ポータビリティを重視してるっぽい
+section
+  h3 利用例
+  ul
+    li Atomで採用されている
+    ul
+      li （Atomのために開発されてる感がある）
+      li シンタックスハイライト
+      li インデント
+      li ブロックを畳む機能などなど
+      li Atom 1.2.5 betaからopt-inで使える
+      li 詳細は“site:blog.atom.io tree-sitter“で検索
+section
+  h2 パーサーを作ってみる
+  ul
+    li 四則演算の文法
+    ul
+      li 自然数 (0, 1, 2, …)
+      li 整数 (..., -2, -1, 0, 1, 2, …)
+      li 足し算・引き算
+      li 掛け算・割り算
+      li かっこ
+section
+  h3 はじめの手順
+  ol
+    li
+      code npm init && npm install -D tree-sitter-cli
+    li 適当に
+      code grammar.js
+      | を書く
+    li
+      code npx tree-sitter generate
+      | (パーサーのコードとかを出力）
+    li
+      code npm install
+      |（パーサーをビルドするための設定＋実際のビルド）
+    li
+      code npx tree-sitter parser ./source
+      | で動作確認
+section
+  h3 開発手順
+  ol
+    li
+      code grammar.js
+      | を更新する
+    li
+      code npx tree-sitter generate && npx node-gyp build
+    li 動作確認
+      ul
+        li
+          code npx tree-sitter test
+        li
+          code npx tree-sitter parser ./source -d
+section
+  h3 ポイント
+  ul
+    li テストも書ける
+    ul
+      li パースエラーもテストできる
+      li エラー回復込みのテストを書く必要があるっぽい
+    li generateしてからbuildする必要がある
+      ul
+        li package.jsonとかMakefileとかでコマンド一発でテスト実行できるようにすると楽
+section
+  h3 パーサーを動かしてみる
+  ul
+    li JavaScript, Rust, Haskell, Rubyとかのバインディングがある
+      ul
+        li JavaScriptのバインディングがいちばん整備されてる
+        li READMEのサンプルを10行ぐらいコピペするだけで動かせるのでおすすめ
+section
+  h3 Atomに組み込んでみる
+  ul
+    li Atomではpackageをインストールすると機能を拡張できる。
+    li 各言語のシンタックスハイライトとかもpackageとして提供されている。
+section
+  h3 Atomに組み込んでみる
+  ul
+    li 従来の言語サポートはTextMateのgrammarの仕組みを使っている。
+    li tree-sitterを利用する方法は公式のドキュメントには載ってない。
+    li Atomにバンドルされているtree-sitterのバージョンに合わせる必要がある。
+section
+  h3 まとめ
+  ul
+    li エディタ用のパーサーは意外と簡単につくれる
+    ul
+      li JavaScriptのパーサー（
+        a(href="https://github.com/tree-sitter/tree-sitter-javascript/blob/master/grammar.js")
+          | tree-sitter-javascript
+        | ）も1000行未満
+      li でも言語処理系で使うのは難しそう
+    li Atomがんばってくれ
+section
+  h2 おすすめのリソース
+  ul
+    li tree-sitterの文法定義チュートリアル
+      ul
+        li
+          a(href="https://gist.github.com/Aerijo/df27228d70c633e088b0591b8857eeef")
+            | https://gist.github.com/Aerijo/df27228d70c633e088b0591b8857eeef
+    li tree-sitterの開発チームのプレゼン
+      ul
+        li
+          a(href="https://www.youtube.com/watch?v=0CGzC_iss-8")
+            | https://www.youtube.com/watch?v=0CGzC_iss-8
+        li
+          a(href="https://www.youtube.com/watch?v=a1rC79DHpmY")
+            | https://www.youtube.com/watch?v=a1rC79DHpmY
+        li 字幕付いてるしスライドもわかりやすいので雰囲気をつかむのにおすすめ
+section
+  h2 あわせて読みたい
+  ul
+    li Optimizations in Syntax Highlighting, a Visual Studio Code Story
+      ul
+        li
+          a(href="https://code.visualstudio.com/blogs/2017/02/08/syntax-highlighting-optimizations")
+            | https://code.visualstudio.com/blogs/2017/02/08/syntax-highlighting-optimizations
+          ul
+            li VS Codeのsyntax highlightを最適化したりしたときの苦労話
+            li Atomと同じくTextMateのgrammarファイルを使ってる

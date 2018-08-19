@@ -1,6 +1,7 @@
 import Reveal from 'reveal.js';
 import 'reveal.js/css/reveal.css';
-import 'reveal.js/css/theme/solarized.css';
+import 'reveal.js/css/theme/black.css';
+import './src/custom.css';
 
 Reveal.initialize({
     // Display presentation control arrows

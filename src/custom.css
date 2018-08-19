@@ -1,0 +1,7 @@
+small {
+  color: #999;
+}
+
+.reveal .slides section:not(.front) {
+  text-align: left;
+}
